@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shamito Pauper Cube — Card Library</title>
+  <meta name="description" content="Every card in the Shamito Pauper Cube: 180 commons, filterable by color.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="corner tl"></div><div class="corner tr"></div>
+
+  <header class="masthead">
+    <svg class="sigil" viewBox="0 0 58 64" aria-hidden="true">
+      <path d="M29 2 L33 26 L29 34 L25 26 Z"/>
+      <path d="M17 10 L22.5 30 L21 37 L15.5 28 Z"/>
+      <path d="M41 10 L35.5 30 L37 37 L42.5 28 Z"/>
+      <path d="M6 20 L15 36 L15 41 L9 34 Z"/>
+      <path d="M52 20 L43 36 L43 41 L49 34 Z"/>
+      <path d="M8 40 Q29 52 50 40 Q44 58 29 62 Q14 58 8 40 Z"/>
+    </svg>
+    <div class="brand">SHAMITO</div>
+    <h1>PAUPER CUBE</h1>
+    <div class="rule"><span class="diamond"></span></div>
+    <p class="tagline">CARD LIBRARY</p>
+    <p class="stats">180 Commons <span>✦</span> 4 Players <span>✦</span> 5 Packs of 9</p>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Filters">
+      <div class="filters" id="filters" role="group" aria-label="Filter by color"></div>
+      <div class="toolbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.5" y1="15.5" x2="21" y2="21"/></svg>
+          <input id="search" type="search" placeholder="Search cards or types…" autocomplete="off">
+        </label>
+        <label class="sort">
+          <span>Sort by</span>
+          <select id="sort">
+            <option value="color">Color</option>
+            <option value="cmc">Mana value</option>
+            <option value="name">Name (A–Z)</option>
+            <option value="type">Card type</option>
+          </select>
+        </label>
+        <p class="count" id="count" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="library" class="library" aria-label="Cards"></section>
+    <p id="empty" class="empty" hidden>No cards match your filters.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="rule"><span class="diamond"></span></div>
+    <p class="tip">Stay open early, read the signals, commit by pack 3!</p>
+    <p class="legal">
+      Card images and data from <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>.
+      Magic: The Gathering is © Wizards of the Coast. This is unofficial fan content, not approved or endorsed by Wizards.
+    </p>
+  </footer>
+
+  <dialog id="viewer" class="viewer" aria-label="Card details">
+    <button class="close" id="close" aria-label="Close">×</button>
+    <button class="nav prev" id="prev" aria-label="Previous card">‹</button>
+    <div class="viewer-body">
+      <div class="faces" id="faces"></div>
+      <div class="details">
+        <h2 id="d-name"></h2>
+        <p class="cost" id="d-cost"></p>
+        <p class="type" id="d-type"></p>
+        <dl>
+          <dt>Section</dt><dd id="d-section"></dd>
+          <dt>Mana value</dt><dd id="d-cmc"></dd>
+          <dt>Printing</dt><dd id="d-print"></dd>
+          <dt>Artist</dt><dd id="d-artist"></dd>
+        </dl>
+        <a id="d-link" class="link" target="_blank" rel="noopener">View on Scryfall ↗</a>
+      </div>
+    </div>
+    <button class="nav next" id="next" aria-label="Next card">›</button>
+  </dialog>
+
+  <script src="data/cards.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

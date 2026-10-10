@@ -1,0 +1,181 @@
+﻿# section|card name|set|collector number  (printings you own)
+WHITE|Healer's Hawk|fdn|142
+WHITE|Novice Inspector|mkm|29
+WHITE|Elite Interceptor // Rejoinder|sos|12
+WHITE|Mandibular Kite|mh3|34
+WHITE|Spirited Companion|neo|38
+WHITE|Fortress Kin-Guard|tdm|12
+WHITE|Whitemane Lion|tsr|50
+WHITE|Martyr of Dusk|rix|14
+WHITE|Lifecreed Duo|blb|20
+WHITE|Pegasus Courser|m19|32
+WHITE|Territorial Hammerskull|plst|XLN-41
+WHITE|Aven Riftwatcher|tsr|6
+WHITE|Prideful Parent|fdn|21
+WHITE|Aerie Auxiliary|mh3|18
+WHITE|Salt Road Packbeast|tdm|23
+WHITE|Raise the Alarm|ddo|23
+WHITE|Momentary Blink|tsr|28
+WHITE|Sworn Companions|grn|27
+WHITE|Borrowed Grace|emn|14
+WHITE|Inspired Charge|m19|15
+WHITE|Expel the Unworthy|mh3|25
+WHITE|Pacifism|m20|32
+WHITE|Petrify|lci|30
+WHITE|Dog Umbra|mh3|22
+WHITE|Arrest|mrd|2
+WHITE|Luminous Bonds|grn|21
+WHITE|Banishing Light|blb|1
+WHITE|Settle Beyond Reality|2x2|30
+BLUE|Deranged Assistant|2x2|45
+BLUE|Sage's Row Savant|clu|97
+BLUE|Pestermite|j22|335
+BLUE|Cloudkin Seer|m20|54
+BLUE|Deluge Virtuoso|sos|42
+BLUE|Serum Visionary|mh3|69
+BLUE|Frost Lynx|iko|51
+BLUE|Dimir Informant|grn|36
+BLUE|Muse Drake|grn|46
+BLUE|Mist Raven|avr|67
+BLUE|Moonsnare Specialist|neo|335
+BLUE|Cloudreader Sphinx|dom|47
+BLUE|Aethersnipe|uma|44
+BLUE|Mechanozoa|eoe|66
+BLUE|Think Twice|fdn|165
+BLUE|Impulse|dmr|56
+BLUE|Repeal|rvr|60
+BLUE|Into the Roil|znr|62
+BLUE|Repulse|jvc|25
+BLUE|Deep Analysis|ema|45
+BLUE|Forbidden Alchemy|tdc|152
+BLUE|Mystical Teachings|tsp|69
+BLUE|Pieces of the Puzzle|soi|78
+BLUE|Frost Breath|m14|56
+BLUE|Phantom Interference|otj|61
+BLUE|Essence Scatter|sos|47
+BLUE|Prohibit|mh1|64
+BLUE|Claustrophobia|ddm|27
+BLACK|Retrofitted Transmogrant|mh3|106
+BLACK|Bloodthrone Vampire|ddp|46
+BLACK|Mardu Skullhunter|ktk|78
+BLACK|Inkrise Infiltrator|neo|341
+BLACK|Ghoulcaller's Accomplice|soi|112
+BLACK|Wailing Ghoul|emn|112
+BLACK|Phyrexian Ghoul|dde|6
+BLACK|Thraben Foulbloods|emn|108
+BLACK|Cadaver Imp|ddp|48
+BLACK|Gravedigger|j25|452
+BLACK|Falkenrath Noble|c17|113
+BLACK|Scurrilous Sentry|mh3|108
+BLACK|Chitin Gravestalker|dft|79
+BLACK|First-Sphere Gargantua|mh1|91
+BLACK|Dokuchi Shadow-Walker|neo|339
+BLACK|Okiba Reckoner Raid // Nezumi Road Captain|neo|117
+BLACK|Clawing Torment|neo|91
+BLACK|Dead Weight|grn|67
+BLACK|Bone Shards|mh2|76
+BLACK|Last Gasp|sos|86
+BLACK|Wither and Bloom|mh3|111
+BLACK|Moment of Craving|rix|79
+BLACK|Stab Wound|ddm|72
+BLACK|Murder|dsk|110
+BLACK|Essence Drain|dst|43
+BLACK|Resentful Revelation|fin|114
+BLACK|Read the Bones|ddp|56
+BLACK|Death Denied|sok|63
+RED|Fanatical Firebrand|fdn|195
+RED|Kiln Fiend|ddj|2
+RED|Thermo-Alchemist|emn|147
+RED|Shock Brigade|tdm|120
+RED|Underworld Rage-Hound|thb|163
+RED|Ghitu Journeymage|dom|126
+RED|Keldon Overseer|dom|134
+RED|Bloodfire Expert|ktk|101
+RED|Brambleback Brute|ecl|128
+RED|Furnace Whelp|plst|IMA-129
+RED|Boilerbilges Ripper|dsk|127
+RED|Emrakul's Hatcher|ddp|59
+RED|Sparktongue Dragon|m19|159
+RED|Plasma Bolt|eoe|152
+RED|Fiery Impulse|ori|145
+RED|Reckless Charge|ema|144
+RED|Twin Bolt|tdm|128
+RED|Scorching Dragonfire|dsk|156
+RED|Light 'Em Up|snc|113
+RED|Direct Current|grn|96
+RED|Lightning Javelin|ori|153
+RED|Chandra's Outrage|m12|125
+RED|Fiery Fall|ddn|29
+RED|Thrill of Possibility|m21|165
+RED|Tormenting Voice|soi|186
+RED|Seize Opportunity|tdm|119
+RED|Goblin Surprise|fdn|200
+RED|Act of Treason|ktk|95
+GREEN|Rubblebelt Maverick|mkm|174
+GREEN|Studious First-Year // Rampant Growth|sos|162
+GREEN|Ainok Wayfarer|tdm|134
+GREEN|Basking Broodscale|mh3|145
+GREEN|Flesh Burrower|dsk|178
+GREEN|Lys Alana Informant|ecl|181
+GREEN|Werebear|dmr|182
+GREEN|Satyr Wayfinder|m3c|244
+GREEN|Champion of Dusan|tdm|137
+GREEN|Eldrazi Repurposer|mh3|150
+GREEN|Phantom Tiger|ima|181
+GREEN|Citanul Woodreaders|ddr|4
+GREEN|Lifespring Druid|bfz|177
+GREEN|Jewel-Eyed Cobra|mh2|168
+GREEN|Blastoderm|gvl|7
+GREEN|Ondu Giant|ddp|19
+GREEN|Temperamental Oozewagg|mh3|172
+GREEN|Kavu Primarch|dmr|167
+GREEN|Wildheart Invoker|ddp|26
+GREEN|Sagu Wildling // Roost Seek|tdm|157
+GREEN|Colossal Dreadmask|mh3|148
+GREEN|Giant Growth|msh|167
+GREEN|Snakeskin Veil|tdm|159
+GREEN|Bushwhack|fdn|215
+GREEN|Horrific Assault|mh3|157
+GREEN|Monstrous Emergence|dsk|191
+GREEN|Grapple with the Past|emn|160
+GREEN|Search for Tomorrow|tsr|229
+MULTICOLOR|Deputy of Acquittals|dgm|65
+MULTICOLOR|Riddle Gate Gargoyle|mh3|201
+MULTICOLOR|Faerie Snoop|mkm|203
+MULTICOLOR|Gravelgill Axeshark|shm|164
+MULTICOLOR|Body Dropper|snc|168
+MULTICOLOR|Cindering Cutthroat|blb|208
+MULTICOLOR|Branching Bolt|ala|158
+MULTICOLOR|Burning-Tree Emissary|mm3|207
+MULTICOLOR|Wary Farmer|ecl|251
+MULTICOLOR|Head of the Homestead|blb|216
+MULTICOLOR|Tithe Drinker|c17|200
+MULTICOLOR|Moonrise Cleric|blb|226
+MULTICOLOR|Cyclops Superconductor|mh3|182
+MULTICOLOR|Piston-Fist Cyclops|grn|217
+MULTICOLOR|Desecrator Hag|eve|119
+MULTICOLOR|Shambling Shell|gk1|70
+MULTICOLOR|Dog Walker|mkm|197
+MULTICOLOR|Skyknight Legionnaire|grn|198
+MULTICOLOR|Quandrix Pledgemage|stx|219
+MULTICOLOR|Snapping Voidcraw|mh3|204
+COLORLESS|Prophetic Prism|kld|229
+COLORLESS|Foraging Wickermaw|ecl|256
+COLORLESS|Gravestone Strider|mkm|252
+COLORLESS|Spider-Bot|spm|173
+COLORLESS|Ninja's Kunai|neo|252
+COLORLESS|Hierophant's Chalice|xln|240
+COLORLESS|Watcher of the Wayside|tdm|249
+COLORLESS|Serrated Arrows|hml|110
+LANDS|Tranquil Cove|tdm|270
+LANDS|Dismal Backwater|tdm|254
+LANDS|Bloodfell Caves|tdm|250
+LANDS|Rugged Highlands|tdm|265
+LANDS|Blossoming Sands|tdm|251
+LANDS|Scoured Barrens|tdm|267
+LANDS|Swiftwater Cliffs|tdm|268
+LANDS|Jungle Hollow|tdm|258
+LANDS|Wind-Scarred Crag|ktk|247
+LANDS|Simic Guildgate|dgm|156
+LANDS|Evolving Wilds|ecl|264
+LANDS|Terramorphic Expanse|sos|265
