@@ -38,7 +38,9 @@
     gem: '<path d="M12 3 L20 9 L12 21 L4 9 Z" fill="none" stroke="#2b2b2b" stroke-width="2" stroke-linejoin="round"/><path d="M4 9 H20" stroke="#2b2b2b" stroke-width="1.6"/>',
     peak: '<path d="M2 20 L9 8 L13 14 L16 10 L22 20 Z" fill="#3c3424"/>',
   };
-  const pipHtml = (s) => `<span class="pip ${s.pip}">${s.icon ? `<svg viewBox="0 0 24 24">${ICONS[s.icon]}</svg>` : ""}</span>`;
+  const pipHtml = (s) => `<span class="pip ${s.pip}" aria-hidden="true">${s.icon ? `<svg viewBox="0 0 24 24">${ICONS[s.icon]}</svg>` : ""}</span>`;
+
+  const esc = (str) => String(str).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
 
   const manaHtml = (cost) =>
     cost
@@ -73,12 +75,46 @@
       const id = btn.dataset.id;
       if (id === "ALL") state.colors.clear();
       else state.colors.has(id) ? state.colors.delete(id) : state.colors.add(id);
-      filtersEl.querySelectorAll(".chip").forEach((b) => {
-        const on = b.dataset.id === "ALL" ? state.colors.size === 0 : state.colors.has(b.dataset.id);
-        b.setAttribute("aria-pressed", String(on));
-      });
+      syncChips();
       render();
+      scrollToResults();
     });
+  }
+
+  function syncChips() {
+    filtersEl.querySelectorAll(".chip").forEach((b) => {
+      const on = b.dataset.id === "ALL" ? state.colors.size === 0 : state.colors.has(b.dataset.id);
+      b.setAttribute("aria-pressed", String(on));
+    });
+  }
+
+  function scrollToResults() {
+    const controls = $("controls");
+    const stickyOffset = getComputedStyle(controls).position === "sticky" ? controls.offsetHeight : 0;
+    const top = libraryEl.getBoundingClientRect().top + window.scrollY - stickyOffset;
+    if (window.scrollY > top) window.scrollTo({ top, behavior: reducedMotion() ? "auto" : "smooth" });
+  }
+
+  const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const SETS = (() => {
+    const sets = new Map();
+    CARDS.forEach((c) => {
+      const s = sets.get(c.set) || { code: c.set, name: c.setName, count: 0 };
+      s.count++;
+      sets.set(c.set, s);
+    });
+    return [...sets.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  })();
+
+  const setIconHtml = (s) =>
+    `<img class="set-icon" src="https://svgs.scryfall.io/sets/${encodeURIComponent(s.code.toLowerCase())}.svg" alt="" loading="lazy" width="18" height="18" onerror="this.remove()">`;
+
+  function buildSets() {
+    $("set-count").textContent = `(${SETS.length})`;
+    $("set-list").innerHTML = SETS
+      .map((s) => `<li title="${esc(s.name)} (${esc(s.code)}): ${s.count} card${s.count === 1 ? "" : "s"}">${setIconHtml(s)}<span class="set-name">${esc(s.name)}</span><span class="set-code">${esc(s.code)}</span><span class="n">${s.count}</span></li>`)
+      .join("");
   }
 
   const byName = (a, b) => a.name.localeCompare(b.name);
@@ -112,6 +148,13 @@
           title: t === "Sorcery" ? "Sorceries" : `${t}s`,
           cards: cards.filter((c) => primaryType(c) === t).sort((a, b) => SECTION_INDEX[a.section] - SECTION_INDEX[b.section] || byCmcName(a, b)),
         }));
+      case "set":
+        return SETS.map((s) => ({
+          title: esc(s.name),
+          icon: setIconHtml(s),
+          code: s.code,
+          cards: cards.filter((c) => c.set === s.code).sort((a, b) => SECTION_INDEX[a.section] - SECTION_INDEX[b.section] || byCmcName(a, b)),
+        }));
       default:
         return [{ title: null, cards: [...cards].sort(byName) }];
     }
@@ -120,8 +163,9 @@
   function cardHtml(card, index) {
     const img = card.images[0];
     const extra = card.images.length > 1 ? '<span class="flip">2 faces</span>' : "";
-    return `<button class="card" data-index="${index}" title="${card.name}" aria-label="${card.name}">
-      <img src="${img.normal}" alt="${card.name}" loading="lazy" decoding="async" width="488" height="680">${extra}</button>`;
+    const name = esc(card.name);
+    return `<button type="button" class="card" data-index="${index}" data-name="${name}" title="${name}" aria-label="${name}" aria-haspopup="dialog">
+      <img src="${img.normal}" alt="" loading="lazy" decoding="async" width="488" height="680">${extra}</button>`;
   }
 
   function render() {
@@ -136,7 +180,7 @@
     libraryEl.innerHTML = groups
       .map((g) => {
         const head = g.title
-          ? `<div class="group-head">${g.pip ? pipHtml(g.pip) : ""}<h2>${g.title}</h2><span class="n">${g.cards.length} card${g.cards.length === 1 ? "" : "s"}</span><span class="line"></span></div>`
+          ? `<div class="group-head${g.icon ? " set-head" : ""}">${g.pip ? pipHtml(g.pip) : ""}${g.icon || ""}<h2>${g.title}${g.code ? ` <span class="set-code">${esc(g.code)}</span>` : ""}</h2><span class="n">${g.cards.length} card${g.cards.length === 1 ? "" : "s"}</span><span class="line"></span></div>`
           : "";
         return `<section class="group">${head}<div class="grid">${g.cards.map((c) => cardHtml(c, i++)).join("")}</div></section>`;
       })
@@ -148,12 +192,20 @@
 
   const viewer = $("viewer");
 
+  function preload(index) {
+    const c = visible[(index + visible.length) % visible.length];
+    if (c) c.images.forEach((f) => { new Image().src = f.large; });
+  }
+
   function openCard(index) {
+    if (!visible.length) return;
     current = (index + visible.length) % visible.length;
     const c = visible[current];
     const faces = $("faces");
     faces.className = `faces${c.images.length > 1 ? " double" : ""}`;
-    faces.innerHTML = c.images.map((f, n) => `<img src="${f.large}" alt="${c.name}${c.images.length > 1 ? ` (face ${n + 1})` : ""}">`).join("");
+    faces.innerHTML = c.images
+      .map((f, n) => `<img src="${f.large}" alt="${esc(c.name)}${c.images.length > 1 ? ` (face ${n + 1})` : ""}" width="672" height="936">`)
+      .join("");
     $("d-name").textContent = c.name;
     $("d-cost").innerHTML = manaHtml(c.manaCost);
     $("d-type").textContent = c.type;
@@ -163,26 +215,93 @@
     $("d-print").textContent = `${c.setName} (${c.set}) #${c.collector} · Common`;
     $("d-artist").textContent = c.artist;
     $("d-link").href = c.scryfall;
-    if (!viewer.open) viewer.showModal();
+    $("position").textContent = `${current + 1} / ${visible.length}`;
+    viewer.scrollTop = 0;
+    if (!viewer.open) {
+      viewer.showModal();
+      $("close").focus();
+    }
+    preload(current + 1);
+    preload(current - 1);
   }
 
   libraryEl.addEventListener("click", (e) => {
     const btn = e.target.closest(".card");
     if (btn) openCard(Number(btn.dataset.index));
   });
+
+  libraryEl.addEventListener("error", (e) => {
+    if (e.target.tagName === "IMG") e.target.closest(".card")?.classList.add("broken");
+  }, true);
+
   $("close").addEventListener("click", () => viewer.close());
   $("prev").addEventListener("click", () => openCard(current - 1));
   $("next").addEventListener("click", () => openCard(current + 1));
   viewer.addEventListener("click", (e) => { if (e.target === viewer) viewer.close(); });
+  viewer.addEventListener("close", () => {
+    const card = libraryEl.querySelector(`.card[data-index="${current}"]`);
+    if (!card) return;
+    card.focus({ preventScroll: true });
+    card.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
+  });
   document.addEventListener("keydown", (e) => {
-    if (!viewer.open) return;
-    if (e.key === "ArrowLeft") openCard(current - 1);
-    if (e.key === "ArrowRight") openCard(current + 1);
+    if (viewer.open) {
+      if (e.key === "ArrowLeft") openCard(current - 1);
+      if (e.key === "ArrowRight") openCard(current + 1);
+      return;
+    }
+    const typing = /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement?.tagName);
+    if (e.key === "/" && !typing) {
+      e.preventDefault();
+      $("search").focus();
+    }
   });
 
-  $("sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
-  $("search").addEventListener("input", (e) => { state.query = e.target.value; render(); });
+  let touchStart = null;
+  viewer.addEventListener("touchstart", (e) => {
+    touchStart = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null;
+  }, { passive: true });
+  viewer.addEventListener("touchend", (e) => {
+    if (!touchStart) return;
+    const dx = e.changedTouches[0].clientX - touchStart.x;
+    const dy = e.changedTouches[0].clientY - touchStart.y;
+    touchStart = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) openCard(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  const searchEl = $("search");
+  searchEl.addEventListener("input", (e) => { state.query = e.target.value; render(); });
+  searchEl.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && searchEl.value) {
+      e.preventDefault();
+      searchEl.value = "";
+      state.query = "";
+      render();
+    } else if (e.key === "Enter") {
+      searchEl.blur();
+      scrollToResults();
+    }
+  });
+  $("sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); scrollToResults(); });
+
+  $("reset").addEventListener("click", () => {
+    state.colors.clear();
+    state.query = "";
+    searchEl.value = "";
+    syncChips();
+    render();
+    searchEl.focus();
+  });
+
+  const toTop = $("to-top");
+  const updateToTop = () => { toTop.hidden = window.scrollY < window.innerHeight * 1.2; };
+  window.addEventListener("scroll", updateToTop, { passive: true });
+  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reducedMotion() ? "auto" : "smooth" }));
+
+  $("year").textContent = new Date().getFullYear();
 
   buildFilters();
+  buildSets();
   render();
+  updateToTop();
 })();

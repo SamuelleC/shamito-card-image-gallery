@@ -16,4 +16,8 @@ Import this repository in Vercel with the framework preset set to **Other**. Lea
 2. Run `node scripts/build-cards.mjs` (Node 18+) to refresh `data/cards.js` from Scryfall.
 3. Commit and push. Vercel redeploys automatically.
 
-Card images and data come from [Scryfall](https://scryfall.com). Magic: The Gathering is © Wizards of the Coast. This is unofficial fan content.
+## Credits
+
+Created by Samuelle Celis.
+
+Card images and data come from [Scryfall](https://scryfall.com). This is a fan-made project and is not official. It is not produced, endorsed, or supported by Wizards of the Coast or Scryfall. Magic: The Gathering is © Wizards of the Coast.
