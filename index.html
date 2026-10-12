@@ -34,11 +34,13 @@
     <h1>PAUPER CUBE</h1>
     <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
     <p class="tagline">CARD LIBRARY</p>
-    <p class="stats">180 Commons <span aria-hidden="true">✦</span> 4 Players <span aria-hidden="true">✦</span> 5 Packs of 9</p>
-    <details class="sets">
-      <summary>Sets included <span class="n" id="set-count"></span></summary>
-      <ul class="set-list" id="set-list"></ul>
-    </details>
+    <div class="header-actions">
+      <button type="button" class="event-open" id="event-open" aria-haspopup="dialog">Event &amp; archetypes</button>
+      <details class="sets" id="sets">
+        <summary>Sets included <span class="n" id="set-count"></span></summary>
+        <ul class="set-list" id="set-list"></ul>
+      </details>
+    </div>
   </header>
 
   <main>
@@ -107,6 +109,20 @@
       <button type="button" class="nav prev" id="prev" aria-label="Previous card">‹</button>
       <span class="position" id="position" aria-live="polite"></span>
       <button type="button" class="nav next" id="next" aria-label="Next card">›</button>
+    </div>
+  </dialog>
+
+  <dialog id="event" class="event" aria-labelledby="event-title">
+    <button type="button" class="close" id="event-close" aria-label="Close">×</button>
+    <div class="event-body">
+      <img class="poster" src="assets/event-poster.jpg" width="682" height="1024"
+        alt="Shamito Pauper Cube event poster. Draft, build, battle. October 17, 2026, Saturday 7:00pm onwards at Hernandez Residence, 5th Floor, 2600. Entrance fee ₱250 per player. Prizes: 1st place 2 Reality Fracture packs, 2nd place 1 Reality Fracture pack, 3rd place ₱100, 4th place ₱50. Pauper Cube draft, 40-card minimum decks with basic lands provided, 3 rounds of best-of-3 matches, 30 minutes per round.">
+      <div class="archetypes">
+        <h2 id="event-title">Draft Archetypes</h2>
+        <p class="lede">Each color pair has a plan. Read the signals and find the open lane.</p>
+        <ul class="archetype-list" id="archetype-list"></ul>
+        <button type="button" class="reset" id="event-start">Browse the cards</button>
+      </div>
     </div>
   </dialog>
 

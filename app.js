@@ -18,6 +18,18 @@
     WU: "White–Blue", UB: "Blue–Black", BR: "Black–Red", RG: "Red–Green", GW: "Green–White",
     WB: "White–Black", UR: "Blue–Red", BG: "Black–Green", RW: "Red–White", GU: "Green–Blue",
   };
+  const ARCHETYPES = [
+    { pair: "WU", name: "Skies & Blink", plan: "Evasive fliers backed by flicker effects that reuse enter-the-battlefield triggers.", keys: ["Deputy of Acquittals", "Riddle Gate Gargoyle", "Momentary Blink", "Mist Raven"] },
+    { pair: "UB", name: "Control", plan: "Trade removal and counterspells for cards, then win the long game with value creatures.", keys: ["Faerie Snoop", "Gravelgill Axeshark", "Forbidden Alchemy", "Mystical Teachings"] },
+    { pair: "BR", name: "Sacrifice", plan: "Make fodder, sacrifice it for value, and steal blockers to throw back at your opponent.", keys: ["Body Dropper", "Cindering Cutthroat", "Bloodthrone Vampire", "Act of Treason"] },
+    { pair: "RG", name: "Stompy", plan: "Efficient beaters and pump spells that curve out and overpower blockers.", keys: ["Burning-Tree Emissary", "Branching Bolt", "Rubblebelt Maverick", "Kavu Primarch"] },
+    { pair: "GW", name: "Go Wide", plan: "Flood the board with tokens and small creatures, then push through with team pumps.", keys: ["Wary Farmer", "Head of the Homestead", "Raise the Alarm", "Sworn Companions"] },
+    { pair: "WB", name: "Lifegain Drain", plan: "Gain life on every play and turn it into steady drain and bigger creatures.", keys: ["Tithe Drinker", "Moonrise Cleric", "Lifecreed Duo", "Essence Drain"] },
+    { pair: "UR", name: "Spells", plan: "Cheap instants and sorceries fuel creatures that reward you for casting them.", keys: ["Cyclops Superconductor", "Piston-Fist Cyclops", "Kiln Fiend", "Thermo-Alchemist"] },
+    { pair: "BG", name: "Graveyard Value", plan: "Fill your graveyard, then rebuy creatures and outlast the opponent.", keys: ["Desecrator Hag", "Shambling Shell", "Satyr Wayfinder", "Grapple with the Past"] },
+    { pair: "RW", name: "Aggro", plan: "Fast creatures and tokens backed by burn and combat tricks to close games early.", keys: ["Dog Walker", "Skyknight Legionnaire", "Fanatical Firebrand", "Goblin Surprise"] },
+    { pair: "GU", name: "Eldrazi Ramp", plan: "Ramp and make Eldrazi Spawn to power out big threats ahead of schedule.", keys: ["Quandrix Pledgemage", "Snapping Voidcraw", "Basking Broodscale", "Eldrazi Repurposer"] },
+  ];
   const pairOf = (card) => {
     const ids = [...card.colors].sort().join("");
     return PAIRS.find((p) => [...p].sort().join("") === ids) || ids;
@@ -114,6 +126,18 @@
     $("set-count").textContent = `(${SETS.length})`;
     $("set-list").innerHTML = SETS
       .map((s) => `<li title="${esc(s.name)} (${esc(s.code)}): ${s.count} card${s.count === 1 ? "" : "s"}">${setIconHtml(s)}<span class="set-name">${esc(s.name)}</span><span class="set-code">${esc(s.code)}</span><span class="n">${s.count}</span></li>`)
+      .join("");
+  }
+
+  const PIP_SECTION = { W: "WHITE", U: "BLUE", B: "BLACK", R: "RED", G: "GREEN" };
+
+  function buildArchetypes() {
+    $("archetype-list").innerHTML = ARCHETYPES
+      .map((a) => `<li class="archetype">
+        <span class="pips">${[...a.pair].map((c) => pipHtml(SECTIONS[SECTION_INDEX[PIP_SECTION[c]]])).join("")}</span>
+        <div><h3>${esc(a.name)} <span class="pair">${PAIR_NAMES[a.pair]}</span></h3>
+        <p>${esc(a.plan)}</p>
+        <p class="keys">${a.keys.map(esc).join(" · ")}</p></div></li>`)
       .join("");
   }
 
@@ -244,7 +268,30 @@
     card.focus({ preventScroll: true });
     card.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
   });
+  const eventDialog = $("event");
+  const openEvent = () => {
+    if (eventDialog.open) return;
+    eventDialog.showModal();
+    eventDialog.scrollTop = 0;
+    $("event-close").focus();
+  };
+  $("event-open").addEventListener("click", openEvent);
+  $("event-close").addEventListener("click", () => eventDialog.close());
+  $("event-start").addEventListener("click", () => eventDialog.close());
+  eventDialog.addEventListener("click", (e) => { if (e.target === eventDialog) eventDialog.close(); });
+
+  const setsEl = $("sets");
+  document.addEventListener("click", (e) => {
+    if (setsEl.open && !setsEl.contains(e.target)) setsEl.open = false;
+  });
+
   document.addEventListener("keydown", (e) => {
+    if (eventDialog.open) return;
+    if (e.key === "Escape" && setsEl.open) {
+      setsEl.open = false;
+      setsEl.querySelector("summary").focus();
+      return;
+    }
     if (viewer.open) {
       if (e.key === "ArrowLeft") openCard(current - 1);
       if (e.key === "ArrowRight") openCard(current + 1);
@@ -302,6 +349,8 @@
 
   buildFilters();
   buildSets();
+  buildArchetypes();
   render();
   updateToTop();
+  openEvent();
 })();

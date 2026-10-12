@@ -47,7 +47,7 @@ BLUE|Repeal|rvr|60
 BLUE|Into the Roil|znr|62
 BLUE|Repulse|jvc|25
 BLUE|Deep Analysis|ema|45
-BLUE|Forbidden Alchemy|tdc|152
+BLUE|Forbidden Alchemy|ddq|43
 BLUE|Mystical Teachings|tsp|69
 BLUE|Pieces of the Puzzle|soi|78
 BLUE|Frost Breath|m14|56

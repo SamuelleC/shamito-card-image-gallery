@@ -1068,17 +1068,17 @@ window.CUBE_CARDS = [
   ],
   "type": "Instant",
   "rarity": "common",
-  "set": "TDC",
-  "setName": "Tarkir: Dragonstorm Commander",
-  "collector": "152",
+  "set": "DDQ",
+  "setName": "Duel Decks: Blessed vs. Cursed",
+  "collector": "43",
   "artist": "David Rapoza",
   "images": [
    {
-    "normal": "https://cards.scryfall.io/normal/front/0/4/04def7e3-10e4-4733-8c19-8fa6e4469086.jpg?1783907107",
-    "large": "https://cards.scryfall.io/large/front/0/4/04def7e3-10e4-4733-8c19-8fa6e4469086.jpg?1783907107"
+    "normal": "https://cards.scryfall.io/normal/front/9/6/96fd7354-7069-4e3e-b4f2-f9cd15c970ea.jpg?1783937846",
+    "large": "https://cards.scryfall.io/large/front/9/6/96fd7354-7069-4e3e-b4f2-f9cd15c970ea.jpg?1783937846"
    }
   ],
-  "scryfall": "https://scryfall.com/card/tdc/152/forbidden-alchemy?utm_source=api"
+  "scryfall": "https://scryfall.com/card/ddq/43/forbidden-alchemy?utm_source=api"
  },
  {
   "name": "Mystical Teachings",
