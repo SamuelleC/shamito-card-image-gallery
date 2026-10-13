@@ -30,6 +30,17 @@
     { pair: "RW", name: "Aggro", plan: "Fast creatures and tokens backed by burn and combat tricks to close games early.", keys: ["Dog Walker", "Skyknight Legionnaire", "Fanatical Firebrand", "Goblin Surprise"] },
     { pair: "GU", name: "Eldrazi Ramp", plan: "Ramp and make Eldrazi Spawn to power out big threats ahead of schedule.", keys: ["Quandrix Pledgemage", "Snapping Voidcraw", "Basking Broodscale", "Eldrazi Repurposer"] },
   ];
+  // Two highest Cube Cobra draft Elo ratings per color (checked Oct 2026).
+  const TOP_PICKS = {
+    WHITE: ["Novice Inspector", "Spirited Companion"],
+    BLUE: ["Phantom Interference", "Impulse"],
+    BLACK: ["Wither and Bloom", "Bone Shards"],
+    RED: ["Plasma Bolt", "Scorching Dragonfire"],
+    GREEN: ["Basking Broodscale", "Studious First-Year // Rampant Growth"],
+  };
+  const TOP_PICK_RANK = new Map(Object.values(TOP_PICKS).flat().map((name, i) => [name, i]));
+  const isTopPick = (card) => TOP_PICK_RANK.has(card.name);
+  const STAR_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>';
   const pairOf = (card) => {
     const ids = [...card.colors].sort().join("");
     return PAIRS.find((p) => [...p].sort().join("") === ids) || ids;
@@ -186,9 +197,10 @@
 
   function cardHtml(card, index) {
     const img = card.images[0];
-    const extra = card.images.length > 1 ? '<span class="flip">2 faces</span>' : "";
+    const top = isTopPick(card);
+    const extra = (card.images.length > 1 ? '<span class="flip">2 faces</span>' : "") + (top ? `<span class="top-badge" aria-hidden="true">${STAR_ICON}Top pick</span>` : "");
     const name = esc(card.name);
-    return `<button type="button" class="card" data-index="${index}" data-name="${name}" title="${name}" aria-label="${name}" aria-haspopup="dialog">
+    return `<button type="button" class="card${top ? " top-pick" : ""}" data-index="${index}" data-name="${name}" title="${name}" aria-label="${name}${top ? ", top pick" : ""}" aria-haspopup="dialog">
       <img src="${img.normal}" alt="" loading="lazy" decoding="async" width="488" height="680">${extra}</button>`;
   }
 
@@ -197,16 +209,21 @@
     const filtered = CARDS.filter(
       (c) => (state.colors.size === 0 || state.colors.has(c.section)) && (!q || c.name.toLowerCase().includes(q) || c.type.toLowerCase().includes(q))
     );
-    const groups = groupCards(filtered).filter((g) => g.cards.length);
+    const showTopPicks = state.colors.size === 0;
+    const topPicks = showTopPicks ? filtered.filter(isTopPick).sort((a, b) => TOP_PICK_RANK.get(a.name) - TOP_PICK_RANK.get(b.name)) : [];
+    const groups = groupCards(showTopPicks ? filtered.filter((c) => !isTopPick(c)) : filtered).filter((g) => g.cards.length);
+    if (topPicks.length) groups.unshift({ title: "Top Picks", featured: true, cards: topPicks });
     visible = groups.flatMap((g) => g.cards);
 
     let i = 0;
     libraryEl.innerHTML = groups
       .map((g) => {
+        const headClass = g.featured ? " featured-head" : g.icon ? " set-head" : "";
         const head = g.title
-          ? `<div class="group-head${g.icon ? " set-head" : ""}">${g.pip ? pipHtml(g.pip) : ""}${g.icon || ""}<h2>${g.title}${g.code ? ` <span class="set-code">${esc(g.code)}</span>` : ""}</h2><span class="n">${g.cards.length} card${g.cards.length === 1 ? "" : "s"}</span><span class="line"></span></div>`
+          ? `<div class="group-head${headClass}">${g.pip ? pipHtml(g.pip) : ""}${g.icon || ""}${g.featured ? `<span class="star">${STAR_ICON}</span>` : ""}<h2>${g.title}${g.code ? ` <span class="set-code">${esc(g.code)}</span>` : ""}</h2><span class="n">${g.featured ? "Best two of each color" : `${g.cards.length} card${g.cards.length === 1 ? "" : "s"}`}</span><span class="line"></span></div>`
           : "";
-        return `<section class="group">${head}<div class="grid">${g.cards.map((c) => cardHtml(c, i++)).join("")}</div></section>`;
+        const divider = g.featured && groups.length > 1 ? '<div class="rule featured-rule" aria-hidden="true"><span class="diamond"></span></div>' : "";
+        return `<section class="group${g.featured ? " featured" : ""}">${head}<div class="grid">${g.cards.map((c) => cardHtml(c, i++)).join("")}</div></section>${divider}`;
       })
       .join("");
 
@@ -234,7 +251,7 @@
     $("d-cost").innerHTML = manaHtml(c.manaCost);
     $("d-type").textContent = c.type;
     const sec = SECTIONS[SECTION_INDEX[c.section]].label;
-    $("d-section").textContent = c.section === "MULTICOLOR" ? `${sec} · ${PAIR_NAMES[pairOf(c)] || ""}` : sec;
+    $("d-section").textContent = c.section === "MULTICOLOR" ? `${sec} · ${PAIR_NAMES[pairOf(c)] || ""}` : isTopPick(c) ? `${sec} · Top pick` : sec;
     $("d-cmc").textContent = c.cmc;
     $("d-print").textContent = `${c.setName} (${c.set}) #${c.collector} · Common`;
     $("d-artist").textContent = c.artist;

@@ -177,6 +177,19 @@ main { width: min(1240px, 94%); margin: 0 auto; }
   border-radius: var(--card-radius); background: #d9d2c0; color: var(--ink);
   font: 700 15px/1.25 "Cinzel", serif; text-align: center;
 }
+.card.top-pick { outline: 2.5px solid var(--gold); outline-offset: 2px; }
+.top-badge {
+  position: absolute; top: -9px; left: 50%; transform: translateX(-50%); z-index: 1;
+  display: inline-flex; align-items: center; gap: 4px; padding: 1px 9px 1px 7px;
+  border: 1.5px solid var(--gold); border-radius: 999px; background: var(--ink); color: #f7f1e1;
+  font: 600 10.5px/1.5 "Cinzel", serif; letter-spacing: .06em; white-space: nowrap; pointer-events: none;
+}
+.top-badge svg { width: 11px; height: 11px; fill: var(--gold); }
+
+.featured-head .star { width: 22px; height: 22px; flex: none; display: grid; place-items: center; border-radius: 50%; background: var(--ink); }
+.featured-head .star svg { width: 14px; height: 14px; fill: var(--gold); }
+.featured .grid { padding-top: 4px; }
+.featured-rule { margin: 4px auto 28px; }
 .card .flip { position: absolute; right: 6px; bottom: 6px; padding: 2px 7px; border-radius: 999px; background: rgba(31, 42, 36, .85); color: #f7f1e1; font: 600 11px "Cinzel", serif; letter-spacing: .05em; }
 
 .empty { text-align: center; font-style: italic; color: var(--ink-soft); padding: 40px 0; }
@@ -332,7 +345,7 @@ main { width: min(1240px, 94%); margin: 0 auto; }
   .group { margin: 14px 0 24px; }
   .group-head h2 { font-size: 18px; letter-spacing: .08em; }
   .group-head .n { font-size: 15px; }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px 10px; }
   .card { scroll-margin: 130px 0 80px; }
   .empty { padding: 32px 16px; }
 
