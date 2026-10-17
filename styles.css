@@ -68,6 +68,12 @@ a:hover { color: var(--gold-deep); }
   font: 600 13px "Cinzel", serif; letter-spacing: .08em; cursor: pointer;
 }
 .event-open:focus-visible { border-radius: 999px; }
+.pill-link {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 6px 16px;
+  border: 1.5px solid var(--gold-soft); border-radius: 999px; background: rgba(255, 255, 255, .55);
+  font: 600 13px "Cinzel", serif; letter-spacing: .08em; color: var(--ink); text-decoration: none;
+}
+.pill-link:focus-visible { border-radius: 999px; }
 
 .sets summary {
   display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 6px 16px;
@@ -271,6 +277,125 @@ main { width: min(1240px, 94%); margin: 0 auto; }
 .archetype p { margin: 2px 0 0; font-size: 16px; line-height: 1.35; }
 .archetype .keys { font-size: 14px; font-style: italic; color: var(--gold-deep); }
 
+/* Tournament */
+.tournament { width: min(900px, 94%); margin: 8px auto 24px; display: grid; gap: 22px; }
+.tournament:focus { outline: none; }
+.tournament [hidden] { display: none !important; }
+.panel { padding: 24px 28px; border: 1px solid var(--gold-soft); border-radius: 14px; background: rgba(255, 255, 255, .5); }
+.panel h2 { margin: 0 0 14px; font: 900 24px/1.2 "Cinzel", serif; letter-spacing: .04em; }
+.panel h2:focus, .panel h2:focus-visible { outline: none; box-shadow: none; }
+
+.field-row { display: flex; flex-wrap: wrap; gap: 14px 24px; margin-bottom: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; font: 600 12px "Cinzel", serif; letter-spacing: .08em; color: var(--ink-soft); }
+.field.small { flex-direction: row; align-items: center; gap: 8px; }
+.field select, .name-list input {
+  min-height: 42px; padding: 8px 12px; border: 1.5px solid var(--gold-soft); border-radius: 8px;
+  background: rgba(255, 255, 255, .8); font: 17px "EB Garamond", serif; color: var(--ink);
+}
+.field select { cursor: pointer; }
+/* Lucide "chevron-down" replaces the native arrow so every dropdown has the same caret and spacing. */
+.sort select, .field select {
+  -webkit-appearance: none; appearance: none; padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234a554e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
+}
+.field.small select { min-height: 38px; padding: 4px 30px 4px 12px; font-size: 16px; background-position: right 9px center; background-size: 14px; }
+.field select:focus-visible, .name-list input:focus-visible { outline: none; border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(184, 145, 63, .35); }
+
+.names { margin: 0 0 14px; padding: 0; border: 0; }
+.names legend { margin-bottom: 8px; padding: 0; font: 600 12px "Cinzel", serif; letter-spacing: .08em; color: var(--ink-soft); }
+.name-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.name-list input { width: 100%; }
+
+.rules, .hint { margin: 0 0 14px; font-size: 16px; font-style: italic; color: var(--ink-soft); }
+.form-error, .match-error { margin: 0 0 12px; font-weight: 600; color: #9b2c1f; }
+.actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+.actions.restart { justify-content: center; }
+.ghost {
+  min-height: 42px; padding: 8px 20px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: transparent; color: var(--ink); font: 600 14px "Cinzel", serif; letter-spacing: .06em; cursor: pointer;
+}
+.ghost:focus-visible { border-radius: 999px; }
+.text-btn {
+  padding: 8px; border: 0; background: none; cursor: pointer;
+  font: italic 500 16px "EB Garamond", serif; color: var(--ink-soft);
+  text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px;
+}
+
+.matches { display: grid; gap: 12px; margin-bottom: 14px; }
+.match {
+  display: grid; gap: 12px;
+  padding: 12px 16px 14px; border: 1px solid var(--gold-soft); border-radius: 12px; background: rgba(255, 255, 255, .6);
+}
+.match.invalid { border-color: #9b2c1f; box-shadow: 0 0 0 1px #9b2c1f; }
+.match.bye { grid-template-columns: auto 1fr; align-items: center; gap: 10px 18px; padding: 14px 16px; }
+.match.bye p { margin: 0; }
+.match-head {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  padding-bottom: 10px; border-bottom: 1px dashed var(--gold-soft);
+}
+.table-no { font: 700 12px "Cinzel", serif; letter-spacing: .1em; color: var(--gold-deep); white-space: nowrap; }
+/* Equal outer columns keep "vs" centred; player B mirrors player A so scores sit beside "vs". */
+.sides { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 18px; }
+.side { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.side-b { flex-direction: row-reverse; }
+.pname { flex: 1; min-width: 0; font-size: 18px; font-weight: 600; overflow-wrap: break-word; }
+.side-b .pname { text-align: right; }
+.score { display: flex; align-items: center; gap: 8px; flex: none; }
+.side-b .score { flex-direction: row-reverse; }
+.gain { min-width: 34px; text-align: right; font-style: italic; color: var(--gold-deep); }
+.side-b .gain { text-align: left; }
+.vs {
+  display: grid; place-items: center; width: 34px; height: 34px;
+  border: 1px solid var(--gold-soft); border-radius: 50%; background: var(--paper);
+  font: 700 12px "Cinzel", serif; color: var(--ink-soft);
+}
+.match-error { margin: 0; }
+
+.table-wrap { overflow-x: auto; margin-bottom: 14px; }
+.standings { width: 100%; border-collapse: collapse; }
+.standings th, .standings td { padding: 10px 12px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--gold-soft); }
+.standings thead th { font: 700 12px "Cinzel", serif; letter-spacing: .1em; color: var(--gold-deep); }
+.standings .legend { font: italic 500 13px "EB Garamond", serif; letter-spacing: 0; color: var(--ink-soft); }
+.standings tbody th { font-size: 18px; font-weight: 600; overflow-wrap: break-word; }
+.standings .num { text-align: right; font: 700 20px "Cinzel", serif; white-space: nowrap; }
+.standings thead .num { font-size: 12px; }
+.player { display: flex; align-items: center; gap: 10px; }
+.rank {
+  display: grid; place-items: center; flex: none; width: 28px; height: 28px;
+  border-radius: 50%; background: var(--paper-deep); font: 700 13px "Cinzel", serif;
+}
+.champion { background: rgba(184, 145, 63, .12); }
+.champion .rank { background: var(--gold); color: #fff; }
+.record { font-size: 19px; font-weight: 600; letter-spacing: .04em; white-space: nowrap; }
+.bye-tag {
+  display: inline-block; margin-left: 6px; padding: 1px 8px; vertical-align: 2px;
+  border: 1px solid var(--gold-soft); border-radius: 999px; background: rgba(255, 255, 255, .7);
+  font: 700 10px "Cinzel", serif; letter-spacing: .06em; color: var(--gold-deep); white-space: nowrap;
+}
+
+.share {
+  width: 100vw; max-width: 100vw; height: 100vh; max-height: 100vh; margin: 0;
+  height: 100dvh; max-height: 100dvh;
+  padding: 56px 16px 32px; border: 0; overflow-y: auto; background: rgba(20, 26, 22, .82); color: var(--ink);
+}
+.share[open] { display: grid; }
+.share::backdrop { background: transparent; }
+.share .close { color: #f7f1e1; }
+.share .close:focus-visible { box-shadow: 0 0 0 2px #f7f1e1; }
+.share-card {
+  width: min(680px, 100%); margin: auto; padding: 32px 32px 24px; text-align: center;
+  border: 1.5px solid var(--gold); border-radius: 16px; outline: 1px solid var(--gold-soft); outline-offset: -8px;
+  background: radial-gradient(ellipse at top, #fbf8f0, var(--paper) 70%); box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
+}
+.share-card h2 { margin: 0; font: 900 clamp(24px, 5vw, 36px)/1.1 "Cinzel", serif; letter-spacing: .03em; }
+.share-card h2 span { display: block; margin-top: 6px; font-weight: 700; font-size: .55em; letter-spacing: .3em; color: var(--gold-deep); }
+.share-card .rule { width: min(360px, 80%); margin: 14px auto 10px; }
+.share-meta { margin: 0 0 16px; font-style: italic; color: var(--ink-soft); }
+.share-meta span { display: block; }
+.share-card .standings { margin-bottom: 14px; text-align: left; }
+.share-foot { margin: 0; font-size: 14px; font-style: italic; color: var(--ink-soft); }
+
 /* Footer */
 .site-footer { text-align: center; padding: 10px 16px calc(40px + env(safe-area-inset-bottom)); }
 .site-footer .tip { font-style: italic; font-weight: 600; font-size: 20px; margin: 6px 0 18px; }
@@ -293,7 +418,8 @@ main { width: min(1240px, 94%); margin: 0 auto; }
 @media (hover: hover) and (pointer: fine) {
   .chip:hover { border-color: var(--gold); transform: translateY(-1px); }
   .chip[aria-pressed="true"]:hover { border-color: var(--ink); }
-  .sets summary:hover { border-color: var(--gold); }
+  .sets summary:hover, .pill-link:hover { border-color: var(--gold); color: var(--ink); }
+  .ghost:hover { background: rgba(31, 42, 36, .06); }
   .event-open:hover { background: #2d3b33; }
   .card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 10px 22px rgba(31, 42, 36, .3); }
   .nav:hover, .close:hover { color: var(--gold-deep); border-color: var(--gold); }
@@ -311,7 +437,25 @@ main { width: min(1240px, 94%); margin: 0 auto; }
   .masthead { padding: 24px 16px 4px; }
   .sigil { width: 36px; height: 40px; }
   .header-actions { gap: 6px; }
-  .event-open, .sets summary { padding: 6px 10px; font-size: 12px; letter-spacing: .02em; }
+  .event-open, .sets summary, .pill-link { padding: 6px 10px; font-size: 12px; letter-spacing: .02em; }
+
+  .tournament { width: calc(100% - 24px); gap: 16px; }
+  .panel { padding: 18px 14px; }
+  .panel h2 { font-size: 20px; }
+  .match, .match.bye { grid-template-columns: 1fr; gap: 10px; padding: 12px; }
+  .sides { align-items: stretch; gap: 8px; }
+  .side, .side-b { flex-direction: column; justify-content: flex-end; gap: 6px; }
+  .pname, .side-b .pname { flex: none; max-width: 100%; text-align: center; font-size: 17px; }
+  .gain { min-width: 0; }
+  .vs { align-self: end; width: 30px; height: 30px; margin-bottom: 4px; }
+  .share { padding: 52px 10px 20px; }
+  .share-card { padding: 22px 12px 16px; }
+  .share-card .sigil { width: 30px; height: 33px; }  .actions { justify-content: stretch; }
+  .actions .reset, .actions .ghost { flex: 1; }
+  .standings th, .standings td { padding: 8px 6px; }
+  .standings tbody th { font-size: 16px; }
+  .player { gap: 6px; }
+  .rank { width: 24px; height: 24px; font-size: 12px; }
   .set-list { grid-template-columns: 1fr; max-height: 260px; padding: 8px 12px; }
 
   main { width: 100%; }

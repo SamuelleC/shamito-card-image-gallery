@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Shamito Pauper Cube — Tournament</title>
+  <meta name="description" content="Swiss pairings, best-of-three results and final standings for the Shamito Pauper Cube draft.">
+  <meta name="author" content="Samuelle Celis">
+  <meta name="theme-color" content="#f3eee2">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#tournament">Skip to tournament</a>
+  <div class="corner tl" aria-hidden="true"></div><div class="corner tr" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <svg class="sigil" viewBox="0 0 58 64" aria-hidden="true">
+      <path d="M29 2 L33 26 L29 34 L25 26 Z"/>
+      <path d="M17 10 L22.5 30 L21 37 L15.5 28 Z"/>
+      <path d="M41 10 L35.5 30 L37 37 L42.5 28 Z"/>
+      <path d="M6 20 L15 36 L15 41 L9 34 Z"/>
+      <path d="M52 20 L43 36 L43 41 L49 34 Z"/>
+      <path d="M8 40 Q29 52 50 40 Q44 58 29 62 Q14 58 8 40 Z"/>
+    </svg>
+    <div class="brand">SHAMITO</div>
+    <h1>PAUPER CUBE</h1>
+    <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
+    <p class="tagline">TOURNAMENT</p>
+    <div class="header-actions">
+      <a class="pill-link" href="index.html">← Card library</a>
+    </div>
+  </header>
+
+  <main id="tournament" class="tournament" tabindex="-1">
+    <form id="setup" class="panel" novalidate>
+      <h2>New Tournament</h2>
+      <div class="field-row">
+        <label class="field">
+          <span>Number of players</span>
+          <select id="player-count"></select>
+        </label>
+        <label class="field">
+          <span>Number of rounds</span>
+          <select id="round-count"></select>
+        </label>
+      </div>
+      <fieldset class="names">
+        <legend>Player names</legend>
+        <ol class="name-list" id="name-list"></ol>
+      </fieldset>
+      <p class="rules">Best of three. 1 point per game won, 0.5 per drawn game, 0.5 for a bye, 0 for a loss. Maximum of 2 points per round.</p>
+      <p class="form-error" id="setup-error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="submit" class="reset">Start tournament</button>
+      </div>
+    </form>
+
+    <section id="round-view" class="panel" aria-labelledby="round-title" hidden>
+      <h2 id="round-title" tabindex="-1"></h2>
+      <p class="hint">Enter the games won by each player and any drawn games.</p>
+      <div class="matches" id="matches"></div>
+      <p class="form-error" id="round-error" role="alert" hidden></p>
+      <div class="actions">
+        <button type="button" class="ghost" id="undo-round" hidden>Edit previous round</button>
+        <button type="button" class="reset" id="submit-round">Submit results</button>
+      </div>
+    </section>
+
+    <section id="standings-view" class="panel" aria-labelledby="standings-title" hidden>
+      <h2 id="standings-title" tabindex="-1"></h2>
+      <div class="table-wrap">
+        <table class="standings">
+          <thead>
+            <tr><th scope="col">Player</th><th scope="col">Score <span class="legend">(W/L/D)</span></th><th scope="col" class="num">Points</th></tr>
+          </thead>
+          <tbody id="standings-body"></tbody>
+        </table>
+      </div>
+      <p class="hint">Players with equal points share a rank. Ties are settled by agreement.</p>
+      <div class="actions" id="final-actions" hidden>
+        <button type="button" class="ghost" id="edit-last">Edit last round</button>
+        <button type="button" class="reset" id="open-share" aria-haspopup="dialog">Screenshot view</button>
+      </div>
+    </section>
+
+    <dialog class="share" id="share" aria-labelledby="share-title">
+      <button type="button" class="close" id="share-close" aria-label="Close screenshot view">&times;</button>
+      <article class="share-card">
+        <svg class="sigil" viewBox="0 0 58 64" aria-hidden="true">
+          <path d="M29 2 L33 26 L29 34 L25 26 Z"/>
+          <path d="M17 10 L22.5 30 L21 37 L15.5 28 Z"/>
+          <path d="M41 10 L35.5 30 L37 37 L42.5 28 Z"/>
+          <path d="M6 20 L15 36 L15 41 L9 34 Z"/>
+          <path d="M52 20 L43 36 L43 41 L49 34 Z"/>
+          <path d="M8 40 Q29 52 50 40 Q44 58 29 62 Q14 58 8 40 Z"/>
+        </svg>
+        <h2 id="share-title">Shamito Pauper Cube <span>Season 1</span></h2>
+        <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
+        <p class="share-meta" id="share-meta"></p>
+        <table class="standings">
+          <thead>
+            <tr><th scope="col">Player</th><th scope="col">Score <span class="legend">(W/L/D)</span></th><th scope="col" class="num">Points</th></tr>
+          </thead>
+          <tbody id="share-body"></tbody>
+        </table>
+        <p class="share-foot">Best of three · 1 point per game won · 0.5 per drawn game or bye</p>
+      </article>
+    </dialog>
+
+    <div class="actions restart" id="restart-wrap" hidden>
+      <button type="button" class="text-btn" id="restart">Start a new tournament</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="rule" aria-hidden="true"><span class="diamond"></span></div>
+    <p class="credit">© <span id="year">2026</span> Samuelle Celis.</p>
+    <p class="legal">
+      This is a fan-made project and is not official. It is not produced, endorsed, or supported by Wizards of the Coast.
+      Magic: The Gathering is © Wizards of the Coast.
+    </p>
+  </footer>
+
+  <script src="tournament.js"></script>
+</body>
+</html>

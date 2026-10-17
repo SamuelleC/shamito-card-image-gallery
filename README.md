@@ -2,6 +2,8 @@
 
 A static site that shows all 180 cards in the Shamito Pauper Cube, with color filters, sorting and search. No backend or build step is needed.
 
+`tournament.html` runs a best-of-three tournament with pairings, byes and a final ranking. Results are saved in the browser, so a refresh doesn't lose them.
+
 ## Run locally
 
 Open `index.html` in a browser.
